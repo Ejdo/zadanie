@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Server.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,12 +19,13 @@ builder.Services.AddCors(options =>
         policy  =>
         {
             policy
-            .WithOrigins("http://localhost:8080")
+            .AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader();
         });
 });
 
+builder.WebHost.UseUrls("http://*:5085");
 
 var app = builder.Build();
 
@@ -31,6 +34,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
 }
 
 app.UseHttpsRedirection();
