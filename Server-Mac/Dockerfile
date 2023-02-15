@@ -1,8 +1,8 @@
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 as base
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/aspnet:7.0 as base
 WORKDIR /app
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:7.0 AS build
 COPY . /src
 WORKDIR /src
 RUN dotnet build "Server-Mac.csproj" -c Release -o /app/build

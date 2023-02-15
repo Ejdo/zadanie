@@ -1,0 +1,25 @@
+apiVersion: apps/v1 #
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: zadanie
+spec:
+  selector:
+    matchLabels:
+      app: zadanie
+      tier: backend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: zadanie
+        tier: backend
+    spec:
+      containers:
+      - image: akstest10.azurecr.io/praca-server
+        name: backend
+        ports:
+        - containerPort: 5085
+          name: backend

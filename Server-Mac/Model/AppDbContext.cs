@@ -30,6 +30,6 @@ public class AppDbContext : DbContext
     }  
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseNpgsql(@"Host=postgres;Database=postgres;Username=postgres;Password=postgres");
+        optionsBuilder.UseNpgsql(@"Host=zadanie-postgres;Database=postgres;Username=postgres;Password=postgres");
     }
 }

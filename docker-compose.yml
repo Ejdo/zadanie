@@ -11,8 +11,9 @@ services:
             - POSTGRES_PASSWORD=postgres
             - POSTGRES_DB=postgres
         ports:
-            - "5431:5432"
+            - "5432:5432"
     server:
+        platform: linux/amd64
         container_name: server
         build: ./Server-Mac
         depends_on:
@@ -20,6 +21,7 @@ services:
         ports:
             - "5085:5085"
     frontend:
+        platform: linux/amd64
         container_name: frontend
         build: ./client
         ports:

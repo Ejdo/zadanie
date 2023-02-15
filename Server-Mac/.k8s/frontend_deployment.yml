@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  selector:
+    matchLabels:
+      app: zadanie
+  template:
+    metadata:
+      labels:
+        app: zadanie
+    spec:
+      containers:
+      - name: frontend
+        image: praca-frontend
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
