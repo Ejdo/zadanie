@@ -1,23 +1,9 @@
 version: '3.8'
 services:
-    postgres:
-        image: postgres:15.1-alpine
-        container_name: postgres
-        restart: always
-        volumes:
-            - postgres_volume:/var/lib/postgresql/data
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=postgres
-        ports:
-            - "5432:5432"
     server:
         platform: linux/amd64
         container_name: server
         build: ./Server-Mac
-        depends_on:
-            - postgres
         ports:
             - "5085:5085"
     frontend:
