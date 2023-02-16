@@ -13,8 +13,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: praca-frontend
-        imagePullPolicy: Never
+        image: akstest10.azurecr.io/frontend:latest
         resources:
           limits:
             memory: "512Mi"

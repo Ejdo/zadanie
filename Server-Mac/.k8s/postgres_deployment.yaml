@@ -10,38 +10,22 @@ spec:
   selector:
     app: zadanie
     tier: postgres
-    
----
-
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgres-pv-volume
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 2Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/tmp/data/db"
 
 ---
 
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgres-pv-claim
-  labels:
-    app: zadanie
+  name: azure-managed-disk
 spec:
   accessModes:
     - ReadWriteOnce
+  storageClassName: default
   resources:
     requests:
-      storage: 1Gi
+      storage: 2Gi
+
+
 
 ---
 
@@ -70,16 +54,13 @@ spec:
         env:
         - name: POSTGRES_PASSWORD
           value: postgres
-        livenessProbe:
-          tcpSocket:
-            port: 5432
         ports:
         - containerPort: 5432
           name: postgres
         volumeMounts:
-        - name: postgres-persistent-storage
-          mountPath: /var/lib/mysql
+        - name: volume
+          mountPath: /mnt/azure
       volumes:
-      - name: postgres-persistent-storage
+      - name: volume
         persistentVolumeClaim:
-          claimName: postgres-pv-claim
+          claimName: azure-managed-disk
